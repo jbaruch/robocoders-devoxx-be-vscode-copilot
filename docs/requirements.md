@@ -70,6 +70,61 @@ The following are explicitly **excluded** to maintain simplicity:
 
 ---
 
+## Behavioral Specifications
+
+### Feature: Camera Selection and Video Streaming
+
+- **Scenario**: Camera dropdown populates on app load
+  - Given the app is loaded
+  - When the page initializes
+  - Then camera selection dropdown shows available cameras
+
+- **Scenario**: Video stream starts on camera selection
+  - Given available cameras are listed
+  - When user selects a camera
+  - Then video stream displays from selected camera
+
+### Feature: Color Detection and Preview
+
+- **Scenario**: Dominant color updates in real-time
+  - Given video stream is active
+  - When camera captures new frames
+  - Then color preview box shows dominant color
+
+### Feature: Manual Color Send
+
+- **Scenario**: Send button sends current color to bulb
+  - Given dominant color is detected
+  - When user clicks send button
+  - Then color is sent to backend and bulb changes color
+
+### Feature: Auto Mode
+
+- **Scenario**: Auto mode sends color every 3 seconds
+  - Given auto mode is enabled
+  - When 3 seconds pass
+  - Then current color is automatically sent to bulb
+
+### Feature: Error Handling
+
+- **Scenario**: Graceful degradation on bulb offline
+  - Given bulb is unreachable
+  - When color send is attempted
+  - Then error message displays, app continues running
+
+- **Scenario**: Camera reconnect on stream drop
+  - Given video stream drops
+  - When camera becomes available
+  - Then stream automatically reconnects
+
+### API Contracts
+
+- **POST /api/color**
+  - Request: `{"r": int, "g": int, "b": int}` (0-255)
+  - Response: 200 OK on success, 500 on error
+
+---
+
 ## Testing Strategy
 
 ### Integration Testing via headless browsers (Playwright) Checklist
