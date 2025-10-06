@@ -3,8 +3,6 @@ package com.example.vibecoding;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class RgbwControlTest {
 
@@ -37,7 +35,7 @@ class RgbwControlTest {
     @Test
     void cameraDropdownPopulates() {
         // Given
-        page.navigate("http://localhost:8080");
+        page.navigate("http://localhost:8082");
 
         // When
         // Page loads
@@ -50,7 +48,7 @@ class RgbwControlTest {
     @Test
     void videoStreamDisplays() {
         // Given
-        page.navigate("http://localhost:8080");
+        page.navigate("http://localhost:8082");
 
         // When
         page.selectOption("#camera-select", "0");
@@ -60,5 +58,16 @@ class RgbwControlTest {
         // assertTrue(page.locator("video").isVisible());
     }
 
-    // Add more tests...
+    @Test
+    void manualSendColor() {
+        // Given
+        page.navigate("http://localhost:8082");
+
+        // When
+        page.click("#send-button");
+
+        // Then
+        // TODO: Check status or bulb response
+        // For now, just check no error
+    }
 }
