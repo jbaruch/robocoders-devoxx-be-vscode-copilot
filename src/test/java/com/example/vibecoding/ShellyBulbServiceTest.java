@@ -23,6 +23,7 @@ class ShellyBulbServiceTest {
         when(restClient.post()).thenReturn(requestBodyUriSpec);
         when(requestBodyUriSpec.uri("http://192.168.1.100/light/0")).thenReturn(requestBodySpec);
         Map<String, Object> expectedPayload = Map.of(
+            "turn", "on",
             "mode", "color",
             "red", 255,
             "green", 0,

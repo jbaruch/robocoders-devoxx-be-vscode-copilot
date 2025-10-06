@@ -41,6 +41,7 @@ async function startCamera(deviceId) {
             video: { deviceId: { exact: deviceId } }
         });
         video.srcObject = stream;
+        video.play(); // Ensure video plays
         video.addEventListener('play', () => {
             updateColor();
         });
