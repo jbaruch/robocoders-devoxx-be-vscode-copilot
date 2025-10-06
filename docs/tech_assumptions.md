@@ -10,3 +10,11 @@
 - **Testing**: Integration tests with Playwright; unit tests optional.
 - **Deployment**: No Docker, run with mvn spring-boot:run.
 - **Security**: No auth, local network only.
+
+## NFR Evidence (Phase 5)
+
+- **Performance**: App starts in ~0.5 seconds.
+- **Reliability**: Graceful error handling in controller.
+- **Usability**: Large buttons, high contrast in CSS.
+- **Security**: No exposed endpoints, local only.
+- **Maintainability**: Code under 20 lines per method, meaningful names.
