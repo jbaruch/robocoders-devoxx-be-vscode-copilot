@@ -36,6 +36,13 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+# Node/NPM (for Playwright tests)
+node_modules/
+package-lock.json
+test-results/
+playwright-report/
+playwright/.cache/
+
 ### Gradle template
 .gradle
 **/build/
