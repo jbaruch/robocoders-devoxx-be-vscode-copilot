@@ -1,8 +1,6 @@
 // app.js - Frontend logic for RGBW Control App
 
 let video = document.getElementById('video');
-let canvas = document.getElementById('canvas');
-let ctx = canvas.getContext('2d');
 let colorPreview = document.getElementById('color-preview');
 let sendButton = document.getElementById('send-button');
 let autoToggle = document.getElementById('auto-toggle');
@@ -37,8 +35,6 @@ async function startCamera(deviceId) {
         });
         video.srcObject = stream;
         video.addEventListener('play', () => {
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
             updateColor();
         });
     } catch (error) {
@@ -50,9 +46,8 @@ let currentColor = { r: 255, g: 0, b: 0 };
 
 function updateColor() {
     if (video.paused || video.ended) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
-        const color = colorThief.getColor(canvas);
+        const color = colorThief.getColor(video);
         colorPreview.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
         currentColor = { r: color[0], g: color[1], b: color[2] };
         if (autoMode) {

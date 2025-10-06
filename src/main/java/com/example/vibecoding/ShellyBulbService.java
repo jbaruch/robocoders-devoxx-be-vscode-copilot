@@ -18,13 +18,11 @@ public class ShellyBulbService {
     }
 
     public void setColor(int r, int g, int b) {
-        String url = "http://" + bulbIp + "/light/0";
+        String url = "http://" + bulbIp + "/color";
         Map<String, Object> payload = Map.of(
-            "mode", "color",
-            "red", r,
-            "green", g,
-            "blue", b,
-            "turn", "on"
+            "r", r,
+            "g", g,
+            "b", b
         );
         restClient.post()
                 .uri(url)
