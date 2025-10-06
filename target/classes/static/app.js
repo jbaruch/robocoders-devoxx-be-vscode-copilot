@@ -56,12 +56,14 @@ function updateColor() {
     if (video.paused || video.ended) return;
     try {
         const color = colorThief.getColor(video);
+        console.log('color detected', color);
         colorPreview.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
         currentColor = { r: color[0], g: color[1], b: color[2] };
         if (autoMode) {
             sendColor(currentColor);
         }
     } catch (error) {
+        console.log('error', error);
         // Fallback
         colorPreview.style.backgroundColor = 'rgb(255, 0, 0)';
         currentColor = { r: 255, g: 0, b: 0 };
