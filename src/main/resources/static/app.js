@@ -10,7 +10,6 @@ let cameraSelect = document.getElementById('camera-select');
 let currentStream = null;
 let autoMode = false;
 let autoInterval = null;
-let colorThief = new ColorThief();
 let currentColor = { red: 0, green: 0, blue: 0 };
 
 async function populateCameraList() {
@@ -75,18 +74,50 @@ function detectColor() {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     
     try {
-        const color = colorThief.getColor(canvas);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const color = getDominantColor(imageData);
         
         currentColor = {
-            red: color[0],
-            green: color[1],
-            blue: color[2]
+            red: color.r,
+            green: color.g,
+            blue: color.b
         };
         
         updateColorPreview(currentColor);
     } catch (error) {
         console.error('Color detection error:', error);
     }
+}
+
+function getDominantColor(imageData) {
+    const data = imageData.data;
+    const colorCount = {};
+    const step = 5;
+    
+    let rTotal = 0;
+    let gTotal = 0;
+    let bTotal = 0;
+    let count = 0;
+    
+    for (let i = 0; i < data.length; i += 4 * step) {
+        const r = data[i];
+        const g = data[i + 1];
+        const b = data[i + 2];
+        const a = data[i + 3];
+        
+        if (a > 200) {
+            rTotal += r;
+            gTotal += g;
+            bTotal += b;
+            count++;
+        }
+    }
+    
+    return {
+        r: Math.round(rTotal / count),
+        g: Math.round(gTotal / count),
+        b: Math.round(bTotal / count)
+    };
 }
 
 function updateColorPreview(color) {
