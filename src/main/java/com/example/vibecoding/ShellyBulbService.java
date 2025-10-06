@@ -18,8 +18,9 @@ public class ShellyBulbService {
     }
 
     public void setColor(int r, int g, int b) {
-        String url = "http://" + bulbIp + "/color";
+        String url = "http://" + bulbIp + "/color/0";
         Map<String, Object> payload = Map.of(
+            "turn", "on",
             "r", r,
             "g", g,
             "b", b

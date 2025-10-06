@@ -5,6 +5,7 @@ let colorPreview = document.getElementById('color-preview');
 let sendButton = document.getElementById('send-button');
 let autoToggle = document.getElementById('auto-toggle');
 let cameraSelect = document.getElementById('camera-select');
+let startCameraButton = document.getElementById('start-camera');
 let statusDiv = document.getElementById('status');
 
 let autoMode = false;
@@ -20,13 +21,19 @@ async function init() {
             option.text = device.label || `Camera ${index + 1}`;
             cameraSelect.appendChild(option);
         });
-        if (videoDevices.length > 0) {
-            startCamera(videoDevices[0].deviceId);
-        }
     } catch (error) {
         statusDiv.textContent = 'Error accessing cameras: ' + error.message;
     }
 }
+
+startCameraButton.addEventListener('click', () => {
+    const selectedDeviceId = cameraSelect.value;
+    if (selectedDeviceId) {
+        startCamera(selectedDeviceId);
+    } else {
+        statusDiv.textContent = 'Please select a camera first.';
+    }
+});
 
 async function startCamera(deviceId) {
     try {

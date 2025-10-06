@@ -21,8 +21,9 @@ class ShellyBulbServiceTest {
         RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
         RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
         when(restClient.post()).thenReturn(requestBodyUriSpec);
-        when(requestBodyUriSpec.uri("http://192.168.1.100/color")).thenReturn(requestBodySpec);
+        when(requestBodyUriSpec.uri("http://192.168.1.100/color/0")).thenReturn(requestBodySpec);
         Map<String, Object> expectedPayload = Map.of(
+            "turn", "on",
             "r", 255,
             "g", 0,
             "b", 0
