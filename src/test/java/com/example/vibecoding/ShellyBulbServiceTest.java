@@ -3,6 +3,8 @@ package com.example.vibecoding;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
 
+import java.util.Map;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,8 +21,15 @@ class ShellyBulbServiceTest {
         RestClient.RequestBodySpec requestBodySpec = mock(RestClient.RequestBodySpec.class);
         RestClient.ResponseSpec responseSpec = mock(RestClient.ResponseSpec.class);
         when(restClient.post()).thenReturn(requestBodyUriSpec);
-        when(requestBodyUriSpec.uri("http://192.168.1.100/color")).thenReturn(requestBodySpec);
-        when(requestBodySpec.body(new ColorRequest(255, 0, 0))).thenReturn(requestBodySpec);
+        when(requestBodyUriSpec.uri("http://192.168.1.100/light/0")).thenReturn(requestBodySpec);
+        Map<String, Object> expectedPayload = Map.of(
+            "mode", "color",
+            "red", 255,
+            "green", 0,
+            "blue", 0,
+            "turn", "on"
+        );
+        when(requestBodySpec.body(expectedPayload)).thenReturn(requestBodySpec);
         when(requestBodySpec.retrieve()).thenReturn(responseSpec);
         when(responseSpec.toBodilessEntity()).thenReturn(null); // or mock ResponseEntity
 

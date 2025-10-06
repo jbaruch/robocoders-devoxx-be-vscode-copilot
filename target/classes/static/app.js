@@ -1,7 +1,7 @@
 // app.js - Frontend logic for RGBW Control App
 
 let video = document.getElementById('video');
-let canvas = document.createElement('canvas');
+let canvas = document.getElementById('canvas');
 let ctx = canvas.getContext('2d');
 let colorPreview = document.getElementById('color-preview');
 let sendButton = document.getElementById('send-button');
@@ -46,38 +46,41 @@ async function startCamera(deviceId) {
     }
 }
 
-let colorThief = new ColorThief();
+let currentColor = { r: 255, g: 0, b: 0 };
 
 function updateColor() {
     if (video.paused || video.ended) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     try {
-        const color = colorThief.getColor(video);
+        const color = colorThief.getColor(canvas);
         colorPreview.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
+        currentColor = { r: color[0], g: color[1], b: color[2] };
         if (autoMode) {
-            sendColor({ r: color[0], g: color[1], b: color[2] });
+            sendColor(currentColor);
         }
     } catch (error) {
         // Fallback
         colorPreview.style.backgroundColor = 'rgb(255, 0, 0)';
+        currentColor = { r: 255, g: 0, b: 0 };
     }
     requestAnimationFrame(updateColor);
 }
 
-async function sendColor(color) {
-    try {
-        const response = await fetch('/api/color', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(color)
-        });
-        if (response.ok) {
-            statusDiv.textContent = 'Color sent successfully';
-        } else {
-            statusDiv.textContent = 'Error sending color';
-        }
-    } catch (error) {
-        statusDiv.textContent = 'Network error: ' + error.message;
-    }
+function sendColor(color = currentColor) {
+    fetch('/api/color', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(color),
+    })
+    .then(response => response.json())
+    .then(data => {
+        statusDiv.textContent = data.status;
+    })
+    .catch(error => {
+        statusDiv.textContent = 'Error: ' + error.message;
+    });
 }
 
 cameraSelect.addEventListener('change', () => {

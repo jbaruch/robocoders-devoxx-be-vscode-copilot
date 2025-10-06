@@ -1,7 +1,10 @@
 package com.example.vibecoding;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.Map;
 
 @Service
 public class ShellyBulbService {
@@ -9,16 +12,23 @@ public class ShellyBulbService {
     private final RestClient restClient;
     private final String bulbIp;
 
-    public ShellyBulbService(RestClient.Builder restClientBuilder, String bulbIp) {
+    public ShellyBulbService(RestClient.Builder restClientBuilder, @Value("${shelly.bulb.ip}") String bulbIp) {
         this.restClient = restClientBuilder.build();
         this.bulbIp = bulbIp;
     }
 
     public void setColor(int r, int g, int b) {
-        String url = "http://" + bulbIp + "/color";
+        String url = "http://" + bulbIp + "/light/0";
+        Map<String, Object> payload = Map.of(
+            "mode", "color",
+            "red", r,
+            "green", g,
+            "blue", b,
+            "turn", "on"
+        );
         restClient.post()
                 .uri(url)
-                .body(new ColorRequest(r, g, b))
+                .body(payload)
                 .retrieve()
                 .toBodilessEntity();
     }
