@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeCoding RGBW Control</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>RGBW Control App</h1>
+    <div id="camera-section">
+        <select id="camera-select"></select>
+        <video id="video" autoplay></video>
+    </div>
+    <div id="color-preview"></div>
+    <button id="send-button">Send Color</button>
+    <button id="auto-toggle">Start Auto</button>
+    <div id="status"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

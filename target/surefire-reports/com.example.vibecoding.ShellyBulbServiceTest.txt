@@ -1,9 +1,9 @@
 -------------------------------------------------------------------------------
 Test set: com.example.vibecoding.ShellyBulbServiceTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.061 s <<< FAILURE! -- in com.example.vibecoding.ShellyBulbServiceTest
-com.example.vibecoding.ShellyBulbServiceTest.setColor_shouldSendRequestToBulb -- Time elapsed: 0.061 s <<< ERROR!
-java.lang.UnsupportedOperationException: Not implemented yet
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.043 s <<< FAILURE! -- in com.example.vibecoding.ShellyBulbServiceTest
+com.example.vibecoding.ShellyBulbServiceTest.setColor_shouldSendRequestToBulb -- Time elapsed: 0.041 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "org.springframework.web.client.RestClient.post()" because "<local5>.restClient" is null
 	at com.example.vibecoding.ShellyBulbService.setColor(ShellyBulbService.java:19)
 	at com.example.vibecoding.ShellyBulbServiceTest.setColor_shouldSendRequestToBulb(ShellyBulbServiceTest.java:18)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)

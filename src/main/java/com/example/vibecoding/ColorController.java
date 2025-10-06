@@ -16,7 +16,11 @@ public class ColorController {
 
     @PostMapping("/api/color")
     public ResponseEntity<ColorResponse> setColor(@RequestBody ColorRequest request) {
-        // TODO: Implement
-        return ResponseEntity.ok(new ColorResponse("success"));
+        try {
+            shellyBulbService.setColor(request.r(), request.g(), request.b());
+            return ResponseEntity.ok(new ColorResponse("success"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(new ColorResponse("error"));
+        }
     }
 }

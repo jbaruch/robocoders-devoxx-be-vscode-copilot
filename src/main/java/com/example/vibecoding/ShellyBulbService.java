@@ -15,7 +15,11 @@ public class ShellyBulbService {
     }
 
     public void setColor(int r, int g, int b) {
-        // TODO: Implement bulb API call
-        throw new UnsupportedOperationException("Not implemented yet");
+        String url = "http://" + bulbIp + "/color";
+        restClient.post()
+                .uri(url)
+                .body(new ColorRequest(r, g, b))
+                .retrieve()
+                .toBodilessEntity();
     }
 }
